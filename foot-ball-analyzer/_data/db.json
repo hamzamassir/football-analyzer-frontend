@@ -1,0 +1,85 @@
+{
+	"Marathons": [
+		{
+			"ID": 1,
+			"Name": "Mumbai Marathon",
+			"Description": "Annual marathon held in Mumbai",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Female",
+			"image": ""
+		},
+		{
+			"ID": 2,
+			"Name": "Pune Marathon",
+			"Description": "Annual marathon held in Pune",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Male",
+			"image": ""
+		},
+		{
+			"ID": 3,
+			"Name": "Nagpur Marathon",
+			"Description": "Annual marathon held in Nagpur",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Male",
+			"image": ""
+		},
+		{
+			"ID": 4,
+			"Name": "Nashik Marathon",
+			"Description": "Annual marathon held in Nashik",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Both",
+			"image": ""
+		},
+		{
+			"ID": 5,
+			"Name": "Aurangabad Marathon",
+			"Description": "Annual marathon held in Aurangabad",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Male",
+			"image": ""
+		},
+		{
+			"ID": 6,
+			"Name": "Kolhapur Marathon",
+			"Description": "Annual marathon held in Kolhapur",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Both",
+			"image": ""
+		},
+		{
+			"ID": 7,
+			"Name": "Satara Marathon",
+			"Description": "Annual marathon held in Satara",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Male",
+			"image": ""
+		},
+		{
+			"ID": 8,
+			"Name": "Sangli Marathon",
+			"Description": "Annual marathon held in Sangli",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Both",
+			"image": ""
+		},
+		{
+			"ID": 9,
+			"Name": "Solapur Marathon",
+			"Description": "Annual marathon held in Solapur",
+			"Distance": "42 km",
+			"Country": "India",
+			"Gender": "Both",
+			"image": ""
+		}
+	]
+}
