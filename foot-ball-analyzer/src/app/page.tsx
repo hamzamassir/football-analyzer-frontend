@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+'use client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,6 +10,7 @@ import {
 	CardTitle
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { useEffect, useState } from 'react';
 interface Marathon {
 	ID: number;
 	Name: string;
@@ -29,8 +30,30 @@ async function getMarathons(): Promise<Marathon[]> {
 	return result.json();
 }
 
-export default async function Home() {
-	const Marathons = await getMarathons();
+export default function Home() {
+	// const Marathons = await getMarathons();
+	const [marathons, setMarathons] = useState<Marathon[]>([]);
+	const [filteredMarathons, setFilteredMarathons] = useState<Marathon[]>([]);
+	const [search, setSearch] = useState('');
+
+	useEffect(() => {
+		getMarathons().then((data) => {
+			setMarathons(data);
+			setFilteredMarathons(data);
+		});
+	}, []);
+
+	useEffect(() => {
+		if (search === '') {
+			setFilteredMarathons(marathons);
+		} else {
+			setFilteredMarathons(
+				marathons.filter((marathon) =>
+					marathon.Name.toLowerCase().includes(search.toLowerCase())
+				)
+			);
+		}
+	}, [search, marathons]);
 
 	return (
 		<main>
@@ -39,23 +62,16 @@ export default async function Home() {
 					type='Search'
 					placeholder='Search Marathon'
 					className='mb-8'
+					value={search}
+					onChange={(e) => setSearch(e.target.value)}
 				></Input>
 				<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-					{Marathons.map((Marathon) => (
+					{filteredMarathons.map((Marathon) => (
 						<Card
 							key={Marathon.ID}
 							className='flex flex-col justify-between'
 						>
 							<CardHeader className='flex-row gap-4 items-center'>
-								{/* <Avatar>
-								<AvatarImage
-									src={`/img/${Marathon.image}`}
-									alt='@shadcn'
-								/>
-								<AvatarFallback>
-									{Marathon.Name.slice(0, 2)}
-								</AvatarFallback>
-							</Avatar> */}
 								<div>
 									<CardTitle>{Marathon.Name}</CardTitle>
 									<CardDescription>
