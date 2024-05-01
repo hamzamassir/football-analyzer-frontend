@@ -1,6 +1,9 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { CgAdd } from 'react-icons/cg';
+import Link from 'next/link';
+
 import {
 	Card,
 	CardContent,
@@ -23,15 +26,13 @@ interface Marathon {
 
 async function getMarathons(): Promise<Marathon[]> {
 	const result = await fetch('http://localhost:4001/Marathons');
-
-	// delay response
-	await new Promise((resolve) => setTimeout(resolve, 3000));
-
-	return result.json();
+	//await new Promise(resolve => setTimeout(resolve, 3000));
+	return await result.json();
 }
 
+
 export default function Home() {
-	// const Marathons = await getMarathons();
+	//const marathons = await getMarathons();
 	const [marathons, setMarathons] = useState<Marathon[]>([]);
 	const [filteredMarathons, setFilteredMarathons] = useState<Marathon[]>([]);
 	const [search, setSearch] = useState('');
@@ -57,6 +58,15 @@ export default function Home() {
 
 	return (
 		<main>
+			<nav className='flex justify-between items-center'>
+					<h2>Marathons list :</h2>
+					<Link href='/upload'>
+					<Button className='inner-flex justify-center items-center'>
+						<CgAdd className='mr-2 h-4 w-4' />
+						<span>Upload</span>
+					</Button>
+					</Link>
+			</nav>
 			<div>
 				<Input
 					type='Search'
@@ -83,7 +93,16 @@ export default function Home() {
 								<p>{Marathon.Description}</p>
 							</CardContent>
 							<CardFooter className='flex justify-between'>
-								<Button>View</Button>
+								<Link href={
+									{
+										pathname:`/marathon/${Marathon.ID}`,
+										query:{
+											marathon:JSON.stringify(Marathon),
+										}
+									}
+								}>
+									<Button>View</Button>
+								</Link>
 								<Badge variant='secondary'>
 									{Marathon.Distance}
 								</Badge>
