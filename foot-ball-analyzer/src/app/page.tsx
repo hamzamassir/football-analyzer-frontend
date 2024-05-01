@@ -1,8 +1,8 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CgAdd } from 'react-icons/cg';
 import Link from 'next/link';
+import { CgAdd } from 'react-icons/cg';
 
 import {
 	Card,
@@ -29,7 +29,6 @@ async function getMarathons(): Promise<Marathon[]> {
 	//await new Promise(resolve => setTimeout(resolve, 3000));
 	return await result.json();
 }
-
 
 export default function Home() {
 	//const marathons = await getMarathons();
@@ -59,13 +58,13 @@ export default function Home() {
 	return (
 		<main>
 			<nav className='flex justify-between items-center'>
-					<h2>Marathons list :</h2>
-					<Link href='/upload'>
+				<h2>Marathons list :</h2>
+				<Link href='/upload'>
 					<Button className='inner-flex justify-center items-center'>
 						<CgAdd className='mr-2 h-4 w-4' />
 						<span>Upload</span>
 					</Button>
-					</Link>
+				</Link>
 			</nav>
 			<div>
 				<Input
@@ -93,14 +92,20 @@ export default function Home() {
 								<p>{Marathon.Description}</p>
 							</CardContent>
 							<CardFooter className='flex justify-between'>
-								<Link href={
-									{
-										pathname:`/marathon/${Marathon.ID}`,
-										query:{
-											marathon:JSON.stringify(Marathon),
+								<Link
+									href={{
+										pathname: `/marathon/${Marathon.ID}`,
+										query: {
+											marathonName: Marathon.Name,
+											marathonID: Marathon.ID,
+											marathonDescription:
+												Marathon.Description,
+											marathonDistance: Marathon.Distance,
+											marathonCountry: Marathon.Country,
+											MarathonGender: Marathon.Gender
 										}
-									}
-								}>
+									}}
+								>
 									<Button>View</Button>
 								</Link>
 								<Badge variant='secondary'>
