@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 
 //Marathon interface.
 interface Marathon {
-	ID: number;
+	ID: string;
 	Name: string;
 	image: string[];
 	Description: string;
@@ -100,11 +100,10 @@ export default function Home() {
 										query: {
 											marathonName: Marathon.Name,
 											marathonID: Marathon.ID,
-											marathonDescription:
-												Marathon.Description,
+											marathonDescription:Marathon.Description,
 											marathonDistance: Marathon.Distance,
 											marathonCountry: Marathon.Country,
-											MarathonGender: Marathon.Gender
+											MarathonGender: Marathon.Gender,
 										}
 									}}
 								>

@@ -7,7 +7,7 @@
 			"Distance": "42 km",
 			"Country": "India",
 			"Gender": "Female",
-			"image": ""
+			"image":  ["/1.PNG","/2.PNG"]
 		},
 		{
 			"ID": 2,
@@ -43,7 +43,7 @@
 			"Distance": "42 km",
 			"Country": "India",
 			"Gender": "Male",
-			"image": ""
+			"image": ["/_data/1.PNG","/_data/2.PNG"]
 		},
 		{
 			"ID": 6,
@@ -52,7 +52,7 @@
 			"Distance": "42 km",
 			"Country": "India",
 			"Gender": "Both",
-			"image": ""
+			"image": ["/_data/3.PNG","/_data/2.PNG"]
 		},
 		{
 			"ID": 7,
@@ -61,7 +61,7 @@
 			"Distance": "42 km",
 			"Country": "India",
 			"Gender": "Male",
-			"image": ""
+			"image": ["/_data/3.PNG","/_data/2.PNG"]
 		},
 		{
 			"ID": 8,
