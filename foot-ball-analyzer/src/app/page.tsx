@@ -14,10 +14,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useEffect, useState } from 'react';
+
+//Marathon interface.
 interface Marathon {
 	ID: number;
 	Name: string;
-	image: string;
+	image: string[];
 	Description: string;
 	Distance: string;
 	Country: string;
