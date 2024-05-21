@@ -27,7 +27,7 @@ interface Marathon {
 }
 
 async function getMarathons(): Promise<Marathon[]> {
-	const result = await fetch('http://localhost:4001/Marathons');
+	const result = await fetch('http://localhost:3001/api/marathons');
 	//await new Promise(resolve => setTimeout(resolve, 3000));
 	return await result.json();
 }
@@ -100,17 +100,18 @@ export default function Home() {
 										query: {
 											marathonName: Marathon.Name,
 											marathonID: Marathon.ID,
-											marathonDescription:Marathon.Description,
+											marathonDescription:
+												Marathon.Description,
 											marathonDistance: Marathon.Distance,
 											marathonCountry: Marathon.Country,
-											MarathonGender: Marathon.Gender,
+											MarathonGender: Marathon.Gender
 										}
 									}}
 								>
 									<Button>View</Button>
 								</Link>
 								<Badge variant='secondary'>
-									{Marathon.Distance}
+									{Marathon.Distance} KM
 								</Badge>
 								<Badge variant='secondary'>
 									{Marathon.Gender}

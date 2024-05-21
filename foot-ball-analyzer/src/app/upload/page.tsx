@@ -1,20 +1,21 @@
 'use client';
-import { uid } from 'react-uid';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
-import { useState } from 'react';
-import { Textarea } from "@/components/ui/textarea"
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
-	SelectValue,
-  } from "@/components/ui/select"
-  
+	SelectValue
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+// import fs from 'fs';
+import Link from 'next/link';
+import path from 'path';
+import { useState } from 'react';
+import { uid } from 'react-uid';
 
 //Marathon interface.
 interface Marathon {
@@ -27,57 +28,80 @@ interface Marathon {
 	Gender: string;
 }
 
-
-
 export default function page() {
-
-	const initState:Marathon = {
-		ID: "",
-		Name: "",
+	const initState: Marathon = {
+		ID: '',
+		Name: '',
 		image: null,
-		Description: "",
-		Distance: "",
-		Country: "",
-		Gender: ""
-	}
-	
+		Description: '',
+		Distance: '',
+		Country: '',
+		Gender: ''
+	};
 
 	const [marathon, setMarathon] = useState<Marathon>(initState);
 	const [marathonImg, setMarathonImg] = useState<FileList | null>(null);
 
-	function handleImages(e:React.ChangeEvent<HTMLInputElement>){
-		setMarathon(prevState => {
-			return {...prevState, image:e.target.files, ID:uid(prevState)}
-		})
+	function handleImages(e: React.ChangeEvent<HTMLInputElement>) {
+		setMarathon((prevState) => {
+			return { ...prevState, image: e.target.files, ID: uid(prevState) };
+		});
 	}
 
-	function handleSubmit(e:React.FormEvent<HTMLFormElement>){
+	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		setMarathon(prevState => {
-			return {...prevState, ID:uid(prevState)}
-		})
-		console.log(marathon)
-	}
-	
-	function handleChange(e:React.ChangeEvent<HTMLInputElement>){
-		const field:string = e.target.id;
-		const value:string | number = e.target.value;
 
-		setMarathon( (prevState) => {
-			return {...prevState, [field]:value} 
-		})
-		
-	}
-	
-	function handleChangeTextArea(e:React.ChangeEvent<HTMLTextAreaElement>){
-		const field:string = e.target.id;
-		const value:string | number = e.target.value;
+		const formData = new FormData();
+		formData.append('ID', marathon.ID);
+		formData.append('Name', marathon.Name);
+		formData.append('Description', marathon.Description);
+		formData.append('Distance', marathon.Distance);
+		formData.append('Country', marathon.Country);
+		formData.append('Gender', marathon.Gender);
 
-		setMarathon( (prevState) => {
-			return {...prevState, [field]:value} 
-		})
+		if (marathonImg) {
+			for (let i = 0; i < marathonImg.length; i++) {
+				formData.append('image', marathonImg[i]);
+			}
+		}
+
+		try {
+			const response = await fetch(
+				'http://localhost:3001/api/marathons',
+				{
+					method: 'POST',
+					body: formData
+				}
+			);
+
+			const result = await response.json();
+			console.log('Server response:', result);
+
+			// Reset form after submission
+			setMarathon(initState);
+			setMarathonImg(null);
+		} catch (error) {
+			console.error('Error submitting form:', error);
+		}
 	}
 
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+		const field: string = e.target.id;
+		const value: string | number = e.target.value;
+
+		setMarathon((prevState) => {
+			return { ...prevState, [field]: value };
+		});
+	}
+
+	function handleChangeTextArea(e: React.ChangeEvent<HTMLTextAreaElement>) {
+		const field: string = e.target.id;
+		const value: string | number = e.target.value;
+
+		setMarathon((prevState) => {
+			return { ...prevState, [field]: value };
+		});
+	}
 
 	return (
 		<section>
@@ -103,13 +127,12 @@ export default function page() {
 
 				{/* Description Input */}
 				<div className='grid gap-3'>
-					<Label htmlFor='Description'>Marathon's Description</Label>					
+					<Label htmlFor='Description'>Marathon's Description</Label>
 					<Textarea
 						id='Description'
 						placeholder="Marathon's Description"
 						value={marathon.Description}
 						onChangeCapture={handleChangeTextArea}
-						
 					/>
 				</div>
 
@@ -139,11 +162,13 @@ export default function page() {
 
 				{/* Gender Input */}
 				<div className='grid gap-3'>
-					<Label htmlFor='Gender'>Participant Gender (Male / Female) </Label>
+					<Label htmlFor='Gender'>
+						Participant Gender (Male / Female){' '}
+					</Label>
 					<Input
 						id='Gender'
 						type='text'
-						placeholder="Participant Gender"
+						placeholder='Participant Gender'
 						value={marathon.Gender}
 						onChange={handleChange}
 					/>
@@ -152,14 +177,18 @@ export default function page() {
 				{/* Images Input */}
 				<div className='grid gap-3'>
 					<Label htmlFor='marathon-pics'>Marathon's Pictures</Label>
-					<Input className=''
+					<Input
 						id='marathon-pics'
 						type='file'
-						onChange={handleImages}
-						multiple={true}
+						onChange={(e) => {
+							handleImages(e);
+							setMarathonImg(e.target.files);
+						}}
+						multiple
 					/>
 				</div>
-				<Button>Submit</Button>
+
+				<Button type='submit'>Submit</Button>
 			</form>
 		</section>
 	);
