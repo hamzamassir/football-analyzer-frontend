@@ -105,8 +105,8 @@ export default function page() {
 
 	return (
 		<section>
-			<Link href='../'>
-				<Badge className='my-4 cursor-pointer'>{'<-Back'}</Badge>
+			<Link href='/'>
+				<Badge className='my-4 text-lg cursor-pointer'>{'<-Back'}</Badge>
 			</Link>
 			<form
 				method='post'

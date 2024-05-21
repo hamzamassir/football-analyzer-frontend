@@ -20,8 +20,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>
-				<nav className='flex justify-between'>
+			<body className={`${inter.className} bg-cover relative`}>
+				<img src="/cover.jpg" className=' -top-14 bottom-0 absolute -z-10 w-[100vw] h-full opacity-15'>
+				</img>
+				<nav className='flex justify-between' >
 					<h1>Marathon image finder</h1>
 				</nav>
 				{children}
