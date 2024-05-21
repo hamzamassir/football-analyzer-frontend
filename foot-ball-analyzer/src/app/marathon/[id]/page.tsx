@@ -27,7 +27,7 @@ interface Marathon {
 
 
 async function getMarathons(): Promise<Marathon[]> {
-	const result = await fetch('http://localhost:4001/Marathons');
+	const result = await fetch('http://localhost:3001/api/marathons');
 	return await result.json();
 }
 
@@ -61,6 +61,38 @@ export default function page({searchParams}: { searchParams: {
 			setMarathon(newData[0]);
 		});
 	}, []);
+
+	interface fetchedMarathon{
+		desired_bib_number: string,
+		image_paths: string[],
+		marathon_name: string
+	}
+
+	const initFM = {
+		desired_bib_number: "",
+		image_paths: [],
+		marathon_name: ""
+	}
+
+	const [query, setQuery] = useState<string>('');
+	const [fetchMarathon, setFetchMarathon] = useState<fetchedMarathon>(initFM);
+
+
+	function handleQuery(e:React.ChangeEvent<HTMLInputElement>){
+		setQuery(e.target.value);
+	}
+	const handleSearch = () => {
+		
+        fetch(`http://127.0.0.1:5000/search?desired_bib_number=${query}&marathon_name=${searchParams.marathonName}`)
+            .then(response => response.json())
+            .then(data => {
+				console.log(data)
+                setFetchMarathon(data);
+            })
+            .catch(error => {
+                console.error('Error fetching images:', error);
+            });
+    };
 	
 	return (
 		
@@ -83,9 +115,9 @@ export default function page({searchParams}: { searchParams: {
 						</CardHeader>
 						<CardContent>
 							<div className='flex flex-wrap gap-2 overflow-hidden w-ful h-full'>
-								{marathon.image.map((img)=>{
+								{fetchMarathon.image_paths.map((img)=>{
 									return (<Card className=' w-64'>
-										<img src={img} className='h-full w-full'></img>
+										<img src={`http://localhost:3001/uploads/${img}`} className='h-full w-full'></img>
 									</Card>)
 								})}
 							</div>
@@ -111,13 +143,15 @@ export default function page({searchParams}: { searchParams: {
 											id='name'
 											type='number'
 											placeholder="Runner's Number"
+											value={query}
+											onChange={handleQuery}
 										/>
 									</div>
 								</div>
 							</form>
 						</CardContent>
 						<CardFooter className='flex justify-between'>
-							<Button>Find</Button>
+							<Button onClick={handleSearch}>Find</Button>
 						</CardFooter>
 					</Card>
 				</div>
